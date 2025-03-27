@@ -4,6 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/Addons.js';
 import { DragControls } from 'three/examples/jsm/Addons.js';
 import { sliceGeometry } from './utils/slice';
 
+import { LoadingManager } from 'three';
+
 import "./style.css";
 
 
@@ -193,6 +195,20 @@ window.addEventListener("mouseup", () => {
 })
 
 
+// loading manager
+const loadingSpiral = document.querySelector(".loader-overlay") as HTMLDivElement | null;
+if (!loadingSpiral) {
+  throw new Error("Loader overlay element not found");
+}
+
+const manager = new LoadingManager();
+manager.onStart = function(){
+  loadingSpiral.style.display = "inline-block"
+}
+manager.onLoad = function(){
+  loadingSpiral.style.display = "none"
+}
+
 function splitModel(obj:THREE.Object3D, plane:THREE.Plane){
 
   const meshes = []
@@ -291,7 +307,7 @@ modeToggler?.addEventListener("click", function(){
 // const axis = new THREE.AxesHelper();
 // scene.add(axis)
 
-const loader = new GLTFLoader();
+const loader = new GLTFLoader(manager);
 loader.load("models/monkey.glb", function(gltf){
   const model = gltf.scene;
   draggableObjects.push(model);
