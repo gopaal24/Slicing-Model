@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Geometry Slicer</title>
   </head>
@@ -10,7 +10,25 @@
     <div id="app"></div>
     <div class="title">Geometry Slicer</div>
 
-    
+    <div class="instruction-overlay">
+      <div class="instruction-container">
+        <div class="instruction-card">
+          <div class="instruction-title">
+            Model Selection
+          </div>
+          <div class="instruction-content">
+            Select models from top bar.
+          </div>
+          <div class="image">
+            <img id="image" src="/gifs/model_selection.gif" alt="" srcset="">
+          </div>
+        </div>
+        <div class="btn-container">
+          <div class="prev-btn btn">Prev</div>
+          <div class="next-btn btn">Next</div>
+        </div>
+      </div>
+    </div>
 
     <nav class="navbar">
       <div class="models">
@@ -28,4 +46,55 @@
 
     <script type="module" src="/src/main.ts"></script>
   </body>
+
+  <script>
+
+    const title = document.querySelector(".instruction-title")
+    const content = document.querySelector(".instruction-content")
+    const image = document.querySelector("#image")
+    const prevBtn = document.querySelector(".prev-btn")
+    const nextBtn = document.querySelector(".next-btn")
+    const instructionOverlay = document.querySelector(".instruction-overlay")
+
+    const gifPath = [
+      "gifs/model_selection.gif",
+      "gifs/cuttingModel.gif",
+      "gifs/draggingModel.gif"
+    ]
+
+    const instructionTitle = [
+      "Model Selection",
+      "Cutting Mode",
+      "Dragging Mode"
+    ]
+
+    const instructionContent = [
+      "Select models from top bar.",
+      "Drag on the screen to slice the model in cutting mode.",
+      "Change the mode to dragging to drag the sliced models."
+    ]
+
+    let currentCard = 0;
+
+    prevBtn.addEventListener("click", function(){
+      if(currentCard == 0) return;
+      currentCard -= 1;
+      title.textContent = instructionTitle[currentCard];
+      content.textContent = instructionContent[currentCard];
+      image.src = gifPath[currentCard]
+    })
+    
+    nextBtn.addEventListener("click", function(){
+      currentCard += 1;
+      if(currentCard == 2) {
+        nextBtn.textContent = "Close";
+      }
+      else if(currentCard == 3){
+        instructionOverlay.style.display = "none";
+      }
+      title.textContent = instructionTitle[currentCard];
+      content.textContent = instructionContent[currentCard];
+      image.src = gifPath[currentCard]
+    })
+  </script>
 </html>

@@ -166,3 +166,78 @@ body {
   background-color: var(--color-4);
   color: var(--text-primary);
 }
+
+/* Instruction Cards */
+.instruction-overlay {
+  position: fixed;
+  top: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.instruction-container {
+  width: 40%;
+}
+
+.instruction-card {
+  background-color: beige;
+  color: #dda15e;
+  padding: 10px 30px;
+
+  font-weight: 500;
+  text-align: justify;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border-radius: 15px;
+}
+
+.instruction-title {
+  color: #bc6c25;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.instruction-content {
+  margin-bottom: 20px;
+}
+
+.btn-container {
+  position: relative;
+  float: right;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.prev-btn {
+  margin-right: 10px;
+}
+
+.image > img {
+  border-radius: 15px;
+  width: 100%;
+}
+
+.btn {
+  background-color: #bc6c25;
+  padding: 10px 20px;
+
+  margin-top: 10px;
+  border-radius: 25px;
+
+  color: beige;
+  font-weight: 700;
+
+  cursor: pointer;
+}

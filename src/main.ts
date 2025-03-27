@@ -10,10 +10,10 @@ import "./style.css";
 const modelsElement = document.querySelector('.models');
 const modelButtons = modelsElement ? Array.from(modelsElement.children) : [];
 const modelPaths = {
-  car : "/car.glb",
-  cat : "/cat.glb",
-  box : "/box.glb",
-  monkey : "/monkey.glb"
+  car : "models/car.glb",
+  cat : "models/cat.glb",
+  box : "models/box.glb",
+  monkey : "models/monkey.glb"
 }
 // Setting up three js scene________________________________________________________________
 const scene = new THREE.Scene();
@@ -173,17 +173,18 @@ window.addEventListener("mouseup", () => {
         .multiplyScalar(0.5);
       const distance = normal.dot(midPoint);
 
-      const offsets = {
-        front: normal.clone().multiplyScalar(0.1),
-        back: normal.clone().negate().multiplyScalar(0.1)
-      }
+      // const offsets = {
+      //   front: normal.clone().multiplyScalar(0.1),
+      //   back: normal.clone().negate().multiplyScalar(0.1)
+      // }
 
       const plane = new THREE.Plane(normal.clone(), -distance);
       // const planeHelper = new THREE.PlaneHelper(plane);
       // scene.add(planeHelper)
 
       Array.from(selectedObjects).forEach((obj) => {
-        splitModel(obj, plane, offsets);
+        // splitModel(obj, plane, offsets);
+        splitModel(obj, plane);
       });
   
       // selectedObjects.clear();
@@ -192,7 +193,7 @@ window.addEventListener("mouseup", () => {
 })
 
 
-function splitModel(obj:THREE.Object3D, plane:THREE.Plane, offsets:{front:THREE.Vector3, back:THREE.Vector3}){
+function splitModel(obj:THREE.Object3D, plane:THREE.Plane){
 
   const meshes = []
 
@@ -291,7 +292,7 @@ modeToggler?.addEventListener("click", function(){
 // scene.add(axis)
 
 const loader = new GLTFLoader();
-loader.load("/monkey.glb", function(gltf){
+loader.load("models/monkey.glb", function(gltf){
   const model = gltf.scene;
   draggableObjects.push(model);
   model.traverse((child) => {
@@ -302,7 +303,8 @@ loader.load("/monkey.glb", function(gltf){
 
 function removeAllModels(){
   draggableObjects = [];
-  originalPositions.forEach((pos, child)=>{
+  const objects = Array.from(originalPositions.keys())
+  objects.forEach((child)=>{
     if (child.parent) {
       child.parent.remove(child);
     }
