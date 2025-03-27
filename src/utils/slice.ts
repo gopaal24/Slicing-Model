@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { facesFromEdges } from './faces-from-edges.ts';
+import { BufferGeometryUtils } from 'three/examples/jsm/Addons.js';
 
 const FRONT = 'front';
 const BACK = 'back';
@@ -50,7 +51,7 @@ export function sliceGeometry(geometry: THREE.BufferGeometry, plane: THREE.Plane
   // Process triangles
   for (let i = 0; i < indices.length; i += 3) {
     const triangleIndices = [indices[i], indices[i + 1], indices[i + 2]];
-    const trianglePositions = triangleIndices.map(idx => vertexPositions[idx]);
+    // const trianglePositions = triangleIndices.map(idx => vertexPositions[idx]);
 
     let frontTriangleVertices: number[] = [];
     let backTriangleVertices: number[] = [];
@@ -96,14 +97,14 @@ export function sliceGeometry(geometry: THREE.BufferGeometry, plane: THREE.Plane
           backTriangleVertices[0],
           backTriangleVertices[j],
           backTriangleVertices[j + 1]
-        );
+        )
       }
     }
   }
 
   // Create geometries
-  const frontGeometry = new THREE.BufferGeometry();
-  const backGeometry = new THREE.BufferGeometry();
+  let frontGeometry = new THREE.BufferGeometry();
+  let backGeometry = new THREE.BufferGeometry();
  
   // Set attributes
   frontGeometry.setAttribute('position', 
@@ -133,6 +134,9 @@ export function sliceGeometry(geometry: THREE.BufferGeometry, plane: THREE.Plane
 
   frontGeometry.setIndex(frontIndices);
   backGeometry.setIndex(backIndices);
+
+  frontGeometry = BufferGeometryUtils.mergeVertices( frontGeometry);
+  backGeometry = BufferGeometryUtils.mergeVertices( backGeometry);
 
   // Compute normals
   frontGeometry.computeVertexNormals();

@@ -4,11 +4,28 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + TS</title>
+    <title>Geometry Slicer</title>
   </head>
   <body>
     <div id="app"></div>
-    <div class="controls">Enable Controls</div>
+    <div class="title">Geometry Slicer</div>
+
+    
+
+    <nav class="navbar">
+      <div class="models">
+        <button class="model-button" data-model="box">Box</button>
+        <!-- <button class="model-button" data-model="car">car</button> -->
+        <button class="model-button" data-model="monkey">Monkey</button>
+        <button class="model-button" data-model="cat">Cat</button>
+      </div>
+  </nav>
+
+    <div class="mode-selector">
+      <p class="mode-text">Mode</p>
+      <button class="mode-toggle">CUTTING</button>
+    </div>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
